@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Calculadora</title>
     <style>
         input[type=button]{
             background-color: white;
@@ -48,50 +48,106 @@
         var numPantalla = "0";
         var pantallaNum = "si"; //Si o No
         var usarPunto = "no"; //Si o no
-        var numEspera = "0";
+        var numEspera = 0;
         var operaPendiente = "";
-        var solucion = "0";
+        var solucion = "";
 
+        function ingresarNumero(x){
+            if(x != "."){
+                if(numPantalla == "0" || pantallaNum == "si"){
+                    document.Calculadora.txtboxnros.value = x;
+                    numPantalla = x;
+                }else if(x != "."){
+                    document.Calculadora.txtboxnros.value += x;
+                    numPantalla += x;
+                }
+            }
+            if (x == "." && usarPunto == "no" && numPantalla == "0") {
+                document.Calculadora.txtboxnros.value = "0.";
+                numPantalla = x;
+                usarPunto = "si";
+            }else if (x == "." && usarPunto == "no") {
+                document.Calculadora.txtboxnros.value += x;
+                numPantalla += x;
+                usarPunto = "si";
+            }
+            else if (x == "." && usarPunto == "si") {
+                
+            }
+            pantallaNum = "no";
+        }
+
+        function ingresarOperacion(y){
+            if(operaPendiente == ""){
+                numEspera = document.Calculadora.txtboxnros.value;
+                document.Calculadora.txtboxnros.value +=y;
+                operaPendiente = y;
+                pantallaNum = "no";
+                numPantalla = "";
+                usarPunto = "no";
+            }
+        }
+
+        function resultado(){
+            if(operaPendiente != ""){
+                solucion = numEspera+operaPendiente+numPantalla;
+                document.Calculadora.txtboxnros.value=eval(solucion);
+                numPantalla = eval(solucion);
+                pantallaNum = "si";
+                operaPendiente = "";
+                usarPunto = "no";
+            }
+        }
+
+        function limpiar(){
+            numPantalla = "0";
+            pantallaNum = "si";
+            usarPunto = "no"; 
+            numEspera = 0;
+            operaPendiente = "";
+            solucion = "";
+            document.Calculadora.txtboxnros.value = "0";
+        }
     </script>
 
 </head>
 <body>
     <center>
-        <form name="Calculadora">
-            <table border="3">
-                <tr>
-                    <td colspan="5"><input type="text" name="textboxnros" value="0" disabled></td>
-                </tr>
-                <tr>
-                    <td><input type="button" value="1" onclick="ingresarNumero(this.value)"></td>
-                    <td><input type="button" value="2" onclick="ingresarNumero(this.value)"></td>
-                    <td><input type="button" value="3" onclick="ingresarNumero(this.value)"></td>
+    <form name="Calculadora">
+        <table border="3">
+            <tr>
+                <td colspan="5"><input type="text" name="txtboxnros" value="0" disabled></td>
+            </tr>
+            <tr>
+                <td><input type="button" value="1" onclick="ingresarNumero(this.value)"></td>
+                <td><input type="button" value="2" onclick="ingresarNumero(this.value)"></td>
+                <td><input type="button" value="3" onclick="ingresarNumero(this.value)"></td>
 
-                    <td><input type="button" value="+" onclick="ingresarOperacion(this.value)"></td>
-                    <td><input type="button" value="-" onclick="ingresarOperacion(this.value)"></td>
-                </tr>
-                <tr>
-                    <td><input type="button" value="4" onclick="ingresarNumero(this.value)"></td>
-                    <td><input type="button" value="5" onclick="ingresarNumero(this.value)"></td>
-                    <td><input type="button" value="6" onclick="ingresarNumero(this.value)"></td>
+                <td><input type="button" value="+" onclick="ingresarOperacion(this.value)"></td>
+                <td><input type="button" value="-" onclick="ingresarOperacion(this.value)"></td>
+            </tr>
+            <tr>
+                <td><input type="button" value="4" onclick="ingresarNumero(this.value)"></td>
+                <td><input type="button" value="5" onclick="ingresarNumero(this.value)"></td>
+                <td><input type="button" value="6" onclick="ingresarNumero(this.value)"></td>
 
-                    <td><input type="button" value="*" onclick="ingresarOperacion(this.value)"></td>
-                    <td><input type="button" value="/" onclick="ingresarOperacion(this.value)"></td>
-                </tr>
-                <tr>
-                    <td><input type="button" value="7" onclick="ingresarNumero(this.value)"></td>
-                    <td><input type="button" value="8" onclick="ingresarNumero(this.value)"></td>
-                    <td><input type="button" value="9" onclick="ingresarNumero(this.value)"></td>
-                </tr>
-                <tr>
-                    <td><input type="button" value="0" onclick="ingresarNumero(this.value)"></td>
-
-                    <td><input type="button" value="." onclick="ingresarNumero(this.value)"></td>
-                    <td><input type="button" value="C" onclick="limpiar()"></td>
-                    <td colspan="2"><input type="button" value=" = " onclick="resultado()"></td>
-                </tr>
-            </table>
-        </form>
+                <td><input type="button" value="*" onclick="ingresarOperacion(this.value)"></td>
+                <td><input type="button" value="/" onclick="ingresarOperacion(this.value)"></td>
+            </tr>
+            <tr>
+                <td><input type="button" value="7" onclick="ingresarNumero(this.value)"></td>
+                <td><input type="button" value="8" onclick="ingresarNumero(this.value)"></td>
+                <td><input type="button" value="9" onclick="ingresarNumero(this.value)"></td>
+            </tr>
+            <tr>
+                <td><input type="button" value="0" onclick="ingresarNumero(this.value)"></td>
+                <td><input type="button" value="." onclick="ingresarNumero(this.value)"></td>
+                    
+                <td><input type="button" value="C" onclick="limpiar()"></td>
+                <td colspan="2"><input type="button" value="  =  " onclick="resultado()"></td>
+            </tr>
+        </table>
+    </form>
     </center>
 </body>
 </html>
